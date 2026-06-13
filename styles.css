@@ -180,9 +180,43 @@ body {
   color: #d1d5db;
 }
 
+.game {
+  font-size: 0.85rem;
+  color: #9ae6ff;
+  margin-top: -0.3rem;
+}
+
 iframe {
   width: 100%;
   height: 240px;
+  border-radius: 12px;
+  margin-top: 1rem;
+}
+
+/* SCHEDULE */
+.schedule-section {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.schedule-card {
+  background: rgba(10,15,30,0.9);
+  padding: 1.5rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 0 25px rgba(0,0,0,0.6);
+}
+
+.schedule-card iframe {
+  width: 100%;
+  height: 500px;
   border-radius: 12px;
   margin-top: 1rem;
 }
@@ -199,7 +233,7 @@ iframe {
   text-decoration: none;
 }
 
-/* SUBPAGES (Datenschutz / Impressum) */
+/* SUBPAGES */
 .subpage {
   padding: 4rem 2rem;
 }
@@ -228,7 +262,7 @@ iframe {
   color: #e5e7eb;
 }
 
-/* Cookie Banner */
+/* COOKIE BANNER */
 .cookie-banner {
   position: fixed;
   bottom: 1.5rem;
@@ -279,7 +313,7 @@ iframe {
   border: 1px solid #e5e7eb;
 }
 
-/* Responsive */
+/* RESPONSIVE */
 @media (max-width: 768px) {
   .hero-title {
     font-size: 2.4rem;
