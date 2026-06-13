@@ -5,13 +5,18 @@ document.addEventListener("DOMContentLoaded", () => {
   initTwitchData();
 });
 
+/* ---------------------------------------------------
+   TWITCH API – Live Status, Game, Cover, Follower
+--------------------------------------------------- */
 async function initTwitchData() {
   const channels = ["hyptryx", "tommecs"];
   const clientId = "120zjeo34vu3bpj4kedzrrhfu996jk";
 
   for (const channel of channels) {
     try {
-      // STREAM INFO
+      /* -----------------------------
+         STREAM INFO (LIVE / GAME)
+      ----------------------------- */
       const streamRes = await fetch(
         `https://api.twitch.tv/helix/streams?user_login=${channel}`,
         { headers: { "Client-ID": clientId } }
@@ -27,14 +32,18 @@ async function initTwitchData() {
       if (isLive) {
         const stream = streamData.data[0];
 
+        // LIVE BADGE
         badge.textContent = "LIVE";
         badge.classList.add("live");
 
-        card.classList.add("live");
+        // CARD GLOW
+        card.style.borderColor = "rgba(255,165,0,0.6)";
+        card.style.boxShadow = "0 0 35px rgba(255,165,0,0.35)";
 
+        // GAME NAME
         gameEl.textContent = stream.game_name || "Unbekanntes Spiel";
 
-        // GAME COVER LADEN
+        // GAME COVER
         const gameId = stream.game_id;
         if (gameId) {
           const gameRes = await fetch(
@@ -52,10 +61,12 @@ async function initTwitchData() {
       } else {
         badge.textContent = "OFFLINE";
         gameEl.textContent = "Derzeit offline";
-        coverEl.src = "img/offline-cover.png"; // optionales Placeholder-Bild
+        coverEl.src = "img/offline-cover.png";
       }
 
-      // FOLLOWER COUNT
+      /* -----------------------------
+         FOLLOWER COUNT
+      ----------------------------- */
       const userRes = await fetch(
         `https://api.twitch.tv/helix/users?login=${channel}`,
         { headers: { "Client-ID": clientId } }
