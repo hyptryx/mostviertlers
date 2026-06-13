@@ -3,21 +3,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const acceptBtn = document.getElementById("cookie-accept");
   const declineBtn = document.getElementById("cookie-decline");
 
-  if (!banner || !acceptBtn || !declineBtn) return;
+  // Prüfen ob bereits gewählt wurde
+  const choice = localStorage.getItem("cookie-choice");
 
-  const consent = localStorage.getItem("mst_cookie_consent");
-
-  if (!consent) {
+  if (!choice) {
     banner.classList.remove("hidden");
   }
 
   acceptBtn.addEventListener("click", () => {
-    localStorage.setItem("mst_cookie_consent", "accepted");
+    localStorage.setItem("cookie-choice", "accepted");
     banner.classList.add("hidden");
   });
 
   declineBtn.addEventListener("click", () => {
-    localStorage.setItem("mst_cookie_consent", "declined");
+    localStorage.setItem("cookie-choice", "declined");
     banner.classList.add("hidden");
   });
 });
