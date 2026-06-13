@@ -22,20 +22,37 @@ async function initTwitchData() {
       const badge = document.getElementById(`live-${channel}`);
       const card = document.querySelector(`.twitch-card[data-channel="${channel}"]`);
       const gameEl = document.getElementById(`game-${channel}`);
+      const coverEl = document.getElementById(`cover-${channel}`);
 
       if (isLive) {
         const stream = streamData.data[0];
 
         badge.textContent = "LIVE";
-        badge.style.background = "#ff0033";
+        badge.classList.add("live");
 
-        card.style.borderColor = "#4cffd7";
-        card.style.boxShadow = "0 0 35px rgba(76,255,215,0.4)";
+        card.classList.add("live");
 
         gameEl.textContent = stream.game_name || "Unbekanntes Spiel";
+
+        // GAME COVER LADEN
+        const gameId = stream.game_id;
+        if (gameId) {
+          const gameRes = await fetch(
+            `https://api.twitch.tv/helix/games?id=${gameId}`,
+            { headers: { "Client-ID": clientId } }
+          );
+          const gameData = await gameRes.json();
+
+          if (gameData.data && gameData.data.length > 0) {
+            let boxArt = gameData.data[0].box_art_url;
+            boxArt = boxArt.replace("{width}", "285").replace("{height}", "380");
+            coverEl.src = boxArt;
+          }
+        }
       } else {
         badge.textContent = "OFFLINE";
         gameEl.textContent = "Derzeit offline";
+        coverEl.src = "img/offline-cover.png"; // optionales Placeholder-Bild
       }
 
       // FOLLOWER COUNT
