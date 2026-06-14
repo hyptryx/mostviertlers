@@ -337,3 +337,20 @@ body {
   margin-bottom: 10px;
   color: #ffd27f;
 }
+
+/* VOD Avatar Fix – Desktop kleiner, Mobile perfekt */
+.vod-avatar {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+/* Mobile: Avatare automatisch kleiner */
+@media (max-width: 600px) {
+  .vod-avatar {
+    width: 90px;
+    height: 90px;
+  }
+}
