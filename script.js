@@ -46,7 +46,7 @@ async function checkLiveStatus() {
       badge.classList.remove("offline");
       badge.classList.add("live");
     } else {
-      badge.textContent = "🔴 Offline";
+      badge.textContent = "🔴 OFFLINE";
       badge.classList.remove("live");
       badge.classList.add("offline");
     }
