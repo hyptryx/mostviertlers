@@ -376,18 +376,18 @@ body {
   width: fit-content;
 }
 
-/* Online */
+/* LIVE = ROT */
 .live-status.live {
-  background: rgba(0,200,0,0.25);
-  border-color: rgba(0,255,0,0.6);
-  box-shadow: 0 0 18px rgba(0,255,0,0.45);
-  color: #8aff8a;
+  background: rgba(255,0,0,0.20);
+  border-color: rgba(255,0,0,0.55);
+  box-shadow: 0 0 18px rgba(255,0,0,0.45);
+  color: #ff6b6b;
 }
 
-/* Offline */
+/* OFFLINE = GELB */
 .live-status.offline {
-  background: rgba(255,0,0,0.15);
-  border-color: rgba(255,0,0,0.4);
-  box-shadow: 0 0 18px rgba(255,0,0,0.35);
-  color: #ff8a8a;
+  background: rgba(255,200,0,0.20);
+  border-color: rgba(255,200,0,0.55);
+  box-shadow: 0 0 18px rgba(255,200,0,0.45);
+  color: #ffe28a;
 }
