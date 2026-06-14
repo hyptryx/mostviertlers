@@ -397,3 +397,11 @@ body {
   color: inherit;
   display: inline-block;
 }
+
+/* Plan-Titel NICHT als Link darstellen */
+.plan-link h3,
+.plan-link .plan-title {
+  text-decoration: none;
+  color: inherit;
+  pointer-events: none;
+}
