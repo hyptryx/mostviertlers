@@ -391,3 +391,9 @@ body {
   box-shadow: 0 0 18px rgba(255,200,0,0.45);
   color: #ffe28a;
 }
+
+.team-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+}
