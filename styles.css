@@ -1,4 +1,22 @@
-/* GOLD ORBS BACKGROUND – MIX AUS GROSS & KLEIN */
+/* ---------------------------------------------------
+   GLOBAL
+--------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+body {
+  background: #0d0d0d;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ---------------------------------------------------
+   GOLD ORBS BACKGROUND – MIX AUS GROSS & KLEIN
+--------------------------------------------------- */
 .orbs {
   position: fixed;
   inset: 0;
@@ -33,4 +51,193 @@
   0% { transform: translate(0,0) scale(1); }
   50% { transform: translate(40px, -60px) scale(1.15); }
   100% { transform: translate(-20px, 20px) scale(1); }
+}
+
+/* ---------------------------------------------------
+   HERO
+--------------------------------------------------- */
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.hero-logo {
+  width: 160px;
+  margin-bottom: 10px;
+}
+
+.hero-banner {
+  width: 90%;
+  max-width: 900px;
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #ff9900, #ffd700);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Bounce Animation */
+.bounce {
+  animation: bounce 2.5s infinite ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ---------------------------------------------------
+   SECTION TITLES
+--------------------------------------------------- */
+.section-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #ff9900, #ffd700);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* ---------------------------------------------------
+   TEAM SECTION
+--------------------------------------------------- */
+.team-grid {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.team-card {
+  width: 260px;
+  padding: 20px;
+  background: rgba(255,165,0,0.05);
+  border: 1px solid rgba(255,165,0,0.25);
+  border-radius: 12px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(255,165,0,0.35);
+}
+
+.team-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+/* ---------------------------------------------------
+   VOD SECTION
+--------------------------------------------------- */
+.vod-grid {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.vod-card {
+  text-align: center;
+}
+
+.vod-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-bottom: 15px;
+  box-shadow: 0 0 20px rgba(255,165,0,0.4);
+}
+
+.vod-thumb {
+  width: 320px;
+  height: 180px;
+  border-radius: 12px;
+  object-fit: cover;
+  transition: 0.3s;
+  box-shadow: 0 0 25px rgba(255,165,0,0.35);
+}
+
+.vod-thumb:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 35px rgba(255,165,0,0.5);
+}
+
+/* ---------------------------------------------------
+   STREAMING PLÄNE
+--------------------------------------------------- */
+.plan-grid {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.plan-img {
+  width: 350px;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(255,165,0,0.35);
+}
+
+/* ---------------------------------------------------
+   FOOTER
+--------------------------------------------------- */
+.footer {
+  text-align: center;
+  padding: 30px;
+  opacity: 0.7;
+}
+
+.footer a {
+  color: #ffd27f;
+  text-decoration: none;
+}
+
+/* ---------------------------------------------------
+   COOKIE BANNER
+--------------------------------------------------- */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #1a1a1a;
+  padding: 20px;
+  border-top: 1px solid rgba(255,165,0,0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cookie-banner.hidden {
+  display: none;
+}
+
+.cookie-btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.cookie-accept {
+  background: #ff9900;
+  color: #000;
+}
+
+.cookie-decline {
+  background: #333;
+  color: #fff;
 }
