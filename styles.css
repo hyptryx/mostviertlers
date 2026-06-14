@@ -14,6 +14,17 @@ body {
   overflow-x: hidden;
 }
 
+/* Orbitron Schrift für Titel */
+.orbitron,
+.hero-title,
+.section-title,
+.plan-title,
+.legal-section h1,
+.legal-section h2 {
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 1px;
+}
+
 /* ---------------------------------------------------
    GOLD ORBS BACKGROUND – MIX AUS GROSS & KLEIN
 --------------------------------------------------- */
@@ -58,26 +69,22 @@ body {
 --------------------------------------------------- */
 .hero {
   text-align: center;
-  padding: 60px 20px;
+  padding: 40px 20px;
 }
 
 .hero-logo {
-  width: 160px;
-  margin-bottom: 10px;
-}
-
-.hero-banner {
-  width: 90%;
-  max-width: 900px;
-  margin-bottom: 20px;
+  width: 180px;
+  margin: 0 auto 20px auto;
+  display: block;
 }
 
 .hero-title {
   font-size: 3rem;
-  font-weight: 800;
+  font-weight: 900;
   background: linear-gradient(90deg, #ff9900, #ffd700);
   -webkit-background-clip: text;
   color: transparent;
+  margin-bottom: 20px;
 }
 
 /* Bounce Animation */
@@ -88,6 +95,13 @@ body {
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
+}
+
+.hero-banner {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto 20px auto;
+  display: block;
 }
 
 /* ---------------------------------------------------
@@ -183,6 +197,18 @@ body {
   gap: 40px;
   padding: 20px;
   flex-wrap: wrap;
+}
+
+.plan-box {
+  text-align: center;
+}
+
+.plan-title {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #ff9900, #ffd700);
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 .plan-img {
