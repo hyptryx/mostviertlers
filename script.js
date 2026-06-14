@@ -1,90 +1,25 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const yearEl = document.getElementById("year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  // Jahr im Footer setzen
+  document.getElementById("year").textContent = new Date().getFullYear();
 
-  initTwitchData();
+  // VOD Thumbnails laden
+  loadVOD("2794184335", "vod-hyptryx");
+  loadVOD("2766880312", "vod-tommecs");
 });
 
 /* ---------------------------------------------------
-   TWITCH API – Live Status, Game, Cover, Follower
+   VOD THUMBNAIL LOADER
+   Twitch liefert Thumbnails über eine fixe URL-Struktur
 --------------------------------------------------- */
-async function initTwitchData() {
-  const channels = ["hyptryx", "tommecs"];
-  const clientId = "120zjeo34vu3bpj4kedzrrhfu996jk";
+function loadVOD(vodId, elementId) {
+  // Twitch Thumbnail URL
+  const thumbUrl = `https://static-cdn.jtvnw.net/cf_vods/${vodId}/thumb/thumb0-640x360.jpg`;
 
-  for (const channel of channels) {
-    try {
-      /* -----------------------------
-         STREAM INFO (LIVE / GAME)
-      ----------------------------- */
-      const streamRes = await fetch(
-        `https://api.twitch.tv/helix/streams?user_login=${channel}`,
-        { headers: { "Client-ID": clientId } }
-      );
-      const streamData = await streamRes.json();
-      const isLive = streamData.data && streamData.data.length > 0;
+  const img = document.getElementById(elementId);
+  img.src = thumbUrl;
 
-      const badge = document.getElementById(`live-${channel}`);
-      const card = document.querySelector(`.twitch-card[data-channel="${channel}"]`);
-      const gameEl = document.getElementById(`game-${channel}`);
-      const coverEl = document.getElementById(`cover-${channel}`);
-
-      if (isLive) {
-        const stream = streamData.data[0];
-
-        // LIVE BADGE
-        badge.textContent = "LIVE";
-        badge.classList.add("live");
-
-        // CARD GLOW
-        card.style.borderColor = "rgba(255,165,0,0.6)";
-        card.style.boxShadow = "0 0 35px rgba(255,165,0,0.35)";
-
-        // GAME NAME
-        gameEl.textContent = stream.game_name || "Unbekanntes Spiel";
-
-        // GAME COVER
-        const gameId = stream.game_id;
-        if (gameId) {
-          const gameRes = await fetch(
-            `https://api.twitch.tv/helix/games?id=${gameId}`,
-            { headers: { "Client-ID": clientId } }
-          );
-          const gameData = await gameRes.json();
-
-          if (gameData.data && gameData.data.length > 0) {
-            let boxArt = gameData.data[0].box_art_url;
-            boxArt = boxArt.replace("{width}", "285").replace("{height}", "380");
-            coverEl.src = boxArt;
-          }
-        }
-      } else {
-        badge.textContent = "OFFLINE";
-        gameEl.textContent = "Derzeit offline";
-        coverEl.src = "img/offline-cover.png";
-      }
-
-      /* -----------------------------
-         FOLLOWER COUNT
-      ----------------------------- */
-      const userRes = await fetch(
-        `https://api.twitch.tv/helix/users?login=${channel}`,
-        { headers: { "Client-ID": clientId } }
-      );
-      const userData = await userRes.json();
-      const userId = userData.data[0].id;
-
-      const followRes = await fetch(
-        `https://api.twitch.tv/helix/users/follows?to_id=${userId}`,
-        { headers: { "Client-ID": clientId } }
-      );
-      const followData = await followRes.json();
-
-      const followerEl = document.getElementById(`followers-${channel}`);
-      followerEl.textContent = followData.total.toLocaleString("de-DE") + " Follower";
-
-    } catch (err) {
-      console.error("Fehler beim Twitch-API Abruf:", err);
-    }
-  }
+  // Falls Twitch das Thumbnail nicht liefert → Fallback
+  img.onerror = () => {
+    img.src = "img/vod-fallback.png"; // optionales Fallback-Bild
+  };
 }
