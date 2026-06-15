@@ -436,7 +436,8 @@ body {
   transform: scale(1.03);
 }
 
-/* Abstand zwischen Info-Boxen und Streamingpläne */
+/* Abstand unter den Info-Boxen (Desktop + Mobile) */
 .vod-section {
-  margin-bottom: 60px;
+  margin-bottom: 80px !important;
 }
+
