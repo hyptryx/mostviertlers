@@ -405,3 +405,86 @@ body {
   color: inherit;
   pointer-events: none;
 }
+
+/* ---------------------------------------------------
+   HRX INFO BOXEN – GLEICH GROSS + OUTER GLOW
+--------------------------------------------------- */
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 40px;
+  justify-items: center;
+  margin-top: 40px;
+}
+
+.info-box {
+  background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+  padding: 25px;
+  border-radius: 14px;
+  border: 1px solid #6a2cff;
+
+  /* Doppelter Glow */
+  box-shadow:
+    0 0 18px rgba(106, 44, 255, 0.25),
+    0 0 35px rgba(106, 44, 255, 0.35);
+
+  color: #fff;
+  font-size: 17px;
+  line-height: 1.6;
+  width: 100%;
+  max-width: 500px;
+  min-height: 350px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.info-avatar {
+  width: 120px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.info-title {
+  margin: 0;
+  color: #b07bff;
+  text-shadow: 0 0 8px rgba(176, 123, 255, 0.6);
+}
+
+.info-text {
+  margin-top: 10px;
+}
+
+/* ---------------------------------------------------
+   STREAMINGPLÄNE – TITEL NICHT KLICKBAR + OHNE UNTERSTRICH
+--------------------------------------------------- */
+
+.plan-title {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #ff9900, #ffd700);
+  -webkit-background-clip: text;
+  color: transparent;
+  text-decoration: none;
+  pointer-events: none;
+  border-bottom: none;
+}
+
+/* Nur die PNGs sind klickbar */
+.plan-box a {
+  text-decoration: none;
+}
+
+.plan-img {
+  width: 350px;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(255,165,0,0.35);
+  transition: 0.2s;
+}
+
+.plan-img:hover {
+  transform: scale(1.03);
+}
