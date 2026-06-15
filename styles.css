@@ -435,3 +435,8 @@ body {
 .plan-img:hover {
   transform: scale(1.03);
 }
+
+/* Abstand zwischen Info-Boxen und Streamingpläne */
+.vod-section {
+  margin-bottom: 60px;
+}
