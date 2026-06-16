@@ -206,6 +206,28 @@ body {
   color: #ffd27f;
   text-decoration: none;
 }
+.footer {
+  border-top: 1px solid rgba(255, 215, 0, 0.25);
+  padding-top: 20px;
+  margin-top: 40px;
+  text-align: center;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.footer:hover {
+  opacity: 1;
+}
+
+.footer a {
+  color: #ffd700;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: white;
+}
 
 /* ---------------------------------------------------
    COOKIE BANNER
