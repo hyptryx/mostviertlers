@@ -45,6 +45,8 @@ async function checkLiveStatus() {
        if (!extra) continue;
        if (isLive) {
         const stream = data.data[0];
+
+          extra.style.display = "block";
           
       extra.innerHTML = `
            <strong>${stream.title}</strong><br>
@@ -53,7 +55,7 @@ async function checkLiveStatus() {
       `;
 
       } else {
-        extra.textContent = "";
+        extra.style.display = "none";
       }
 
       const badge = document.getElementById(ch.element);
