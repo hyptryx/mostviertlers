@@ -40,6 +40,14 @@ async function checkLiveStatus() {
 
       const data = await res.json();
       const isLive = data.data && data.data.length > 0;
+     const extra = document.getElementById("extra-" + ch.name);
+
+      if (isLive) {
+        const stream = data.data[0];
+        extra.textContent = `${stream.title} · ${stream.game_name}`;
+      } else {
+        extra.textContent = "";
+      }
 
       const badge = document.getElementById(ch.element);
       if (!badge) continue;
