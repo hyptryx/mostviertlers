@@ -1,24 +1,15 @@
+/* ---------------------------------------------------
+   INIT
+--------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  loadVOD("2794184335", "vod-hyptryx");
-  loadVOD("2766880312", "vod-tommecs");
+  checkLiveStatus();
+  setInterval(checkLiveStatus, 60000); // alle 60 Sekunden
 });
 
-/* Twitch VOD Thumbnail Loader */
-function loadVOD(vodId, elementId) {
-  const thumbUrl = `https://static-cdn.jtvnw.net/s3_vods/${vodId}/thumbnails/thumb0-640x360.jpg`;
-
-  const img = document.getElementById(elementId);
-  img.src = thumbUrl;
-
-  img.onerror = () => {
-    img.src = "img/vod-fallback.png";
-  };
-}
-
 /* ---------------------------------------------------
-   LIVE STATUS CHECKER
+   LIVE STATUS CHECKER (MIT TOKEN)
 --------------------------------------------------- */
 async function checkLiveStatus() {
   const channels = [
@@ -28,30 +19,42 @@ async function checkLiveStatus() {
 
   const clientId = "120zjeo34vu3bpj4kedzrrhfu996jk";
 
+  // 👉 HIER DEIN TOKEN EINTRAGEN
+  const bearerToken = "yluu5fk92dhzez21szf3ek9grnq0fj";
+
   for (const ch of channels) {
-    const url = `https://api.twitch.tv/helix/streams?user_login=${ch.name}`;
+    try {
+      const url = `https://api.twitch.tv/helix/streams?user_login=${ch.name}`;
 
-    const res = await fetch(url, {
-      headers: { "Client-ID": clientId }
-    });
+      const res = await fetch(url, {
+        headers: {
+          "Client-ID": clientId,
+          "Authorization": `Bearer ${bearerToken}`
+        }
+      });
 
-    const data = await res.json();
-    const isLive = data.data && data.data.length > 0;
+      if (!res.ok) {
+        console.warn("Twitch API Fehler:", res.status, await res.text());
+        continue;
+      }
 
-    const badge = document.getElementById(ch.element);
-    if (!badge) continue;
+      const data = await res.json();
+      const isLive = data.data && data.data.length > 0;
 
-    if (isLive) {
-      badge.textContent = "🔴 LIVE";
-      badge.classList.remove("offline");
-      badge.classList.add("live");
-    } else {
-      badge.textContent = "🟡 OFFLINE";
-      badge.classList.remove("live");
-      badge.classList.add("offline");
+      const badge = document.getElementById(ch.element);
+      if (!badge) continue;
+
+      if (isLive) {
+        badge.textContent = "🔴 LIVE";
+        badge.classList.remove("offline");
+        badge.classList.add("live");
+      } else {
+        badge.textContent = "🟡 OFFLINE";
+        badge.classList.remove("live");
+        badge.classList.add("offline");
+      }
+    } catch (err) {
+      console.error("Fehler beim Abrufen des Twitch-Status:", err);
     }
   }
 }
-
-checkLiveStatus();
-setInterval(checkLiveStatus, 60000);
