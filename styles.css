@@ -509,3 +509,10 @@ body {
   from { background-position: 0 0; }
   to { background-position: 300px 300px; }
 }
+
+.live-extra {
+  font-size: 12px;
+  margin-top: 4px;
+  opacity: 0.85;
+  min-height: 14px;
+}
