@@ -17,10 +17,10 @@ async function checkLiveStatus() {
     { name: "tommecs", element: "status-tommecs" }
   ];
 
-  const clientId = "120zjeo34vu3bpj4kedzrrhfu996jk";
+  const clientId = "5fytmsdqzv97o2l5altkoqqw7q5fuh";
 
   // 👉 HIER DEIN TOKEN EINTRAGEN
-  const bearerToken = "yluu5fk92dhzez21szf3ek9grnq0fj";
+  const bearerToken = "rvf868a293a4s5ah3517xud04s8sws";
 
   for (const ch of channels) {
     try {
