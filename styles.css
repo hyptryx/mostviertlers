@@ -516,3 +516,17 @@ body {
   opacity: 0.85;
   min-height: 14px;
 }
+
+.glow-line {
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #ffd700, transparent);
+  margin: 40px 0;
+  animation: glowPulse 3s infinite ease-in-out;
+}
+
+@keyframes glowPulse {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
