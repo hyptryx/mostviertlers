@@ -607,7 +607,8 @@ body {
 
 .hero-badge {
   display: block;
-  margin: 0 auto; /* bleibt zentriert */
+  width: fit-content;      /* <<< DAS ist der entscheidende Fix */
+  margin: 10px auto;       /* zentriert */
   padding: 6px 18px;
   border-radius: 999px;
   border: 1px solid rgba(255,215,0,0.55);
