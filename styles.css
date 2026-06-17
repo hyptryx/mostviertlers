@@ -625,11 +625,12 @@ body {
   gap: 6px;
 }
 
+.hero-rotate .static-text,
 .hero-rotate .rotate-text span {
   font-family: "Audiowide", sans-serif !important;
 }
 
-/* Gold-Pulse Glow */
+/* Gold-Pulse Glow – reduziert */
 .gold-pulse {
   animation: goldPulse 3s ease-in-out infinite;
 }
@@ -640,7 +641,7 @@ body {
   100% { text-shadow: 0 0 4px rgba(255,215,0,0.25); }
 }
 
-/* Fade-Only Rotation – perfekt smooth */
+/* Fade-Only Rotation – smooth */
 .rotate-text {
   position: relative;
   height: 32px;
@@ -655,11 +656,11 @@ body {
   animation: fadeRotate 20s ease-in-out infinite;
 }
 
-/* 4 Sätze → 4 Delays */
+/* 4 Sätze → 5 Sekunden pro Satz */
 .rotate-text span:nth-child(1) { animation-delay: 0s; }
-.rotate-text span:nth-child(2) { animation-delay: 4s; }
-.rotate-text span:nth-child(3) { animation-delay: 8s; }
-.rotate-text span:nth-child(4) { animation-delay: 12s; }
+.rotate-text span:nth-child(2) { animation-delay: 5s; }
+.rotate-text span:nth-child(3) { animation-delay: 10s; }
+.rotate-text span:nth-child(4) { animation-delay: 15s; }
 
 @keyframes fadeRotate {
   0%   { opacity: 0; }
@@ -669,3 +670,12 @@ body {
   100% { opacity: 0; }
 }
 
+/* Mobile Fix */
+@media (max-width: 600px) {
+  .hero-rotate {
+    margin-top: 35px;
+    margin-bottom: 25px;
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+}
