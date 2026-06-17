@@ -77,40 +77,6 @@ body {
   margin: 0 auto 20px auto;
   display: block;
 }
-
-/* Pulse Glow Titel */
-.hero-title {
-  position: relative;
-  display: inline-block;
-  font-size: 3rem;
-  font-weight: 900;
-  font-family: "Orbitron", sans-serif;
-
-  background: linear-gradient(90deg, #ff9900, #ffd700);
-  -webkit-background-clip: text;
-  color: transparent;
-
-  animation: pulseGlow 3s infinite ease-in-out;
-  text-shadow: 0 0 12px rgba(255,200,0,0.5);
-
-   margin-bottom: 35px; /* Abstand zum Banner */
-}
-
-@keyframes pulseGlow {
-  0% {
-    text-shadow: 0 0 10px rgba(255,200,0,0.4);
-    transform: scale(1);
-  }
-  50% {
-    text-shadow: 0 0 28px rgba(255,200,0,1);
-    transform: scale(1.03);
-  }
-  100% {
-    text-shadow: 0 0 10px rgba(255,200,0,0.4);
-    transform: scale(1);
-  }
-}
-
 .hero-banner {
   width: 90%;
   max-width: 900px;
@@ -618,31 +584,6 @@ body {
   opacity: 0.8;
 }
 
-.hero-badge {
-  display: block;
-  width: fit-content;      /* <<< DAS ist der entscheidende Fix */
-  margin: 10px auto;       /* zentriert */
-  padding: 6px 18px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,215,0,0.55);
-  font-size: 0.95rem;
-  font-family: "Orbitron", sans-serif;
-  font-weight: 600;
-  background: linear-gradient(90deg, #ffcc33, #fff2a8);
-  -webkit-background-clip: text;
-  color: transparent;
-  text-shadow:
-    0 0 10px rgba(255,215,0,0.45),
-    0 0 18px rgba(255,215,0,0.25);
-  animation: badgePulse 3s infinite ease-in-out;
-}
-
-@keyframes badgePulse {
-  0% { text-shadow: 0 0 10px rgba(255,215,0,0.3); }
-  50% { text-shadow: 0 0 22px rgba(255,215,0,0.9); }
-  100% { text-shadow: 0 0 10px rgba(255,215,0,0.3); }
-}
-
 .roadmap {
   max-width: 900px;
   margin: 40px auto 40px auto;
@@ -666,4 +607,58 @@ body {
   text-align: center;
   font-size: 0.95rem;
   line-height: 1.6;
+}
+
+/* ---------------------------------------------------
+   HERO HOOK – GOLD PULSE + WORD ROTATION
+--------------------------------------------------- */
+
+.hero-rotate {
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: "Orbitron", sans-serif;
+  text-align: center;
+  margin: 10px auto 25px auto;
+  color: #ffd86b;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Gold-Pulse Glow */
+.gold-pulse {
+  animation: goldPulse 3s ease-in-out infinite;
+}
+
+@keyframes goldPulse {
+  0%   { text-shadow: 0 0 8px rgba(255,215,0,0.4); }
+  50%  { text-shadow: 0 0 22px rgba(255,215,0,1); }
+  100% { text-shadow: 0 0 8px rgba(255,215,0,0.4); }
+}
+
+/* Wort-Rotation */
+.rotate-text {
+  height: 32px;
+  overflow: hidden;
+  position: relative;
+}
+
+.rotate-text span {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  animation: rotateWords 12s linear infinite;
+}
+
+.rotate-text span:nth-child(1) { animation-delay: 0s; }
+.rotate-text span:nth-child(2) { animation-delay: 3s; }
+.rotate-text span:nth-child(3) { animation-delay: 6s; }
+.rotate-text span:nth-child(4) { animation-delay: 9s; }
+
+@keyframes rotateWords {
+  0%   { top: 100%; opacity: 0; }
+  10%  { top: 0%; opacity: 1; }
+  25%  { top: 0%; opacity: 1; }
+  35%  { top: -100%; opacity: 0; }
+  100% { top: -100%; opacity: 0; }
 }
