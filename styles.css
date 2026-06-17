@@ -647,7 +647,8 @@ body {
   position: absolute;
   width: 100%;
   left: 0;
-  animation: rotateWords 12s linear infinite;
+  opacity: 0; /* <<< verhindert Überschreiben */
+  animation: rotateWords 16s ease-in-out infinite; /* <<< langsamer + smoother */
 }
 
 .rotate-text span:nth-child(1) { animation-delay: 0s; }
@@ -657,8 +658,8 @@ body {
 
 @keyframes rotateWords {
   0%   { top: 100%; opacity: 0; }
-  10%  { top: 0%; opacity: 1; }
+  8%   { top: 0%; opacity: 1; }
   25%  { top: 0%; opacity: 1; }
-  35%  { top: -100%; opacity: 0; }
+  33%  { top: -100%; opacity: 0; }
   100% { top: -100%; opacity: 0; }
 }
