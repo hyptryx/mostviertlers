@@ -613,8 +613,7 @@ body {
    HERO HOOK – GOLD PULSE + WORD ROTATION
 --------------------------------------------------- */
 
-.hero-rotate,
-.hero-rotate * {
+.hero-rotate {
   font-family: "Audiowide", sans-serif !important;
   font-size: 1.8rem;
   font-weight: 700;
@@ -624,6 +623,10 @@ body {
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.hero-rotate .rotate-text span {
+  font-family: "Audiowide", sans-serif !important;
 }
 
 /* Gold-Pulse Glow */
