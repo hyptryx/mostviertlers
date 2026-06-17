@@ -671,9 +671,9 @@ body {
 /* Perfekter Übergang ohne Überschreiben */
 @keyframes fadeRotate {
   0%   { opacity: 0; }
-  15%  { opacity: 1; }
-  30%  { opacity: 1; }
-  40%  { opacity: 0; }
+  18%  { opacity: 1; }
+  32%  { opacity: 1; }
+  38%  { opacity: 0; }
   100% { opacity: 0; }
 }
 
