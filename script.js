@@ -138,13 +138,13 @@ const scoreEl = document.getElementById("catch-score");
 const endEl = document.getElementById("catch-end");
 
 let score = 0;
-let speed = 6;          // Startgeschwindigkeit
-let speedIncrease = 0.15; // Wie schnell es pro Sekunde schneller wird
+let speed = 6;              // Startgeschwindigkeit
+let speedIncrease = 0.15;   // Steigerung pro Sekunde
 let fallInterval;
 let speedInterval;
 
 /* ---------------------------------------------------
-   TOUCH CONTROL
+   TOUCH CONTROL (nur während des Spiels aktiv)
 --------------------------------------------------- */
 
 function enableTouchControl() {
