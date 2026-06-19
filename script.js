@@ -277,13 +277,35 @@ document.getElementById("catch-save-name").onclick = () => {
    GLOBAL HIGHSCORES (FIREBASE)
 --------------------------------------------------- */
 
-// Score in Firebase speichern
+// Score in Firebase speichern (mit "ein Spieler = ein Eintrag")
 function saveHighscore(name, score) {
-  const ref = db.ref("mostiCatchHighscores").push();
-  ref.set({
-    name,
-    score,
-    timestamp: Date.now()
+  const ref = db.ref("mostiCatchHighscores");
+
+  // 1. Prüfen, ob der Name bereits existiert
+  ref.orderByChild("name").equalTo(name).once("value", snapshot => {
+
+    if (snapshot.exists()) {
+      // Spieler existiert → alten Score holen
+      const key = Object.keys(snapshot.val())[0];
+      const oldData = snapshot.val()[key];
+
+      // 2. Nur überschreiben, wenn neuer Score besser ist
+      if (score > oldData.score) {
+        ref.child(key).update({
+          name,
+          score,
+          timestamp: Date.now()
+        });
+      }
+
+    } else {
+      // Spieler existiert NICHT → neuen Eintrag anlegen
+      ref.push({
+        name,
+        score,
+        timestamp: Date.now()
+      });
+    }
   });
 }
 
