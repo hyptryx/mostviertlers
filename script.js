@@ -127,7 +127,7 @@ btn.addEventListener("click", () => {
 });
 
 /* ---------------------------------------------------
-   MOSTI CATCH – MINI GAME (FINAL FIXED VERSION)
+   MOSTI CATCH – HARD MODE (ENDLESS + SPEED UP)
 --------------------------------------------------- */
 
 const game = document.getElementById("catch-game");
@@ -135,16 +135,16 @@ const player = document.getElementById("catch-player");
 const item = document.getElementById("catch-item");
 const startBtn = document.getElementById("catch-start");
 const scoreEl = document.getElementById("catch-score");
-const timeEl = document.getElementById("catch-time");
 const endEl = document.getElementById("catch-end");
 
 let score = 0;
-let time = 20;
-let gameInterval;
+let speed = 6;          // Startgeschwindigkeit
+let speedIncrease = 0.15; // Wie schnell es pro Sekunde schneller wird
 let fallInterval;
+let speedInterval;
 
 /* ---------------------------------------------------
-   TOUCH CONTROL (aktiv nur während des Spiels)
+   TOUCH CONTROL
 --------------------------------------------------- */
 
 function enableTouchControl() {
@@ -168,43 +168,37 @@ function touchHandler(e) {
 
 function startGame() {
   score = 0;
-  time = 20;
+  speed = 6;
   scoreEl.textContent = score;
-  timeEl.textContent = time;
   endEl.textContent = "";
 
   startBtn.disabled = true;
 
-  // Player Position (zentriert)
+  // Player zentrieren
   player.style.left = (game.clientWidth / 2 - 20) + "px";
 
-  // Item Reset
+  // Item setzen
   resetItem();
 
   // Touch aktivieren
   enableTouchControl();
 
-  // Timer
-  gameInterval = setInterval(() => {
-    time--;
-    timeEl.textContent = time;
-
-    if (time <= 0) {
-      endGame();
-    }
+  // Geschwindigkeit steigt jede Sekunde
+  speedInterval = setInterval(() => {
+    speed += speedIncrease;
   }, 1000);
 
-  // Fall Movement
+  // Fall-Loop
   fallInterval = setInterval(() => {
     let top = parseInt(item.style.top);
-    if (isNaN(top)) top = -40; // Start-Bug Fix
+    if (isNaN(top)) top = -40;
 
-    item.style.top = top + 6 + "px";
+    item.style.top = top + speed + "px";
 
-    // Kollision prüfen
     const itemRect = item.getBoundingClientRect();
     const playerRect = player.getBoundingClientRect();
 
+    // Kollision
     if (
       itemRect.bottom >= playerRect.top &&
       itemRect.top <= playerRect.bottom &&
@@ -216,10 +210,11 @@ function startGame() {
       resetItem();
     }
 
-    // Verpasst
+    // Verpasst → Game Over
     if (top > 300) {
-      resetItem();
+      endGame();
     }
+
   }, 30);
 }
 
@@ -237,17 +232,13 @@ function resetItem() {
 --------------------------------------------------- */
 
 function endGame() {
-  clearInterval(gameInterval);
   clearInterval(fallInterval);
+  clearInterval(speedInterval);
   startBtn.disabled = false;
 
-  // Touch deaktivieren
   disableTouchControl();
 
-  endEl.textContent =
-    score >= 10
-      ? "🔥 Stark! Du bist ein echter Mosti‑Fänger!"
-      : "😅 Ui… da geht noch was!";
+  endEl.textContent = `💀 Game Over – Score: ${score}`;
 }
 
 /* ---------------------------------------------------
