@@ -629,6 +629,56 @@ body {
 }
 
 /* ---------------------------------------------------
+   MOSTI CATCH – HIGHSCORE LISTE
+--------------------------------------------------- */
+
+.catch-name-input {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.catch-name-input input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 2px solid #ffcc00;
+  background: #fff7d1;
+  font-size: 16px;
+}
+
+.catch-name-input button {
+  padding: 6px 12px;
+  margin-left: 6px;
+  border-radius: 6px;
+  border: none;
+  background: #ffcc00;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.catch-highscores {
+  margin-top: 20px;
+  text-align: center;
+  color: #ffcc00;
+  font-weight: bold;
+}
+
+.catch-highscores ol {
+  list-style: none;
+  padding: 0;
+  margin: 10px auto;
+  max-width: 250px;
+}
+
+.catch-highscores li {
+  background: rgba(255, 200, 0, 0.15);
+  border: 1px solid #ffcc00;
+  padding: 6px;
+  margin: 4px 0;
+  border-radius: 6px;
+  font-size: 18px;
+}
+
+/* ---------------------------------------------------
    STREAMINGPLÄNE – TITEL NICHT KLICKBAR + OHNE UNTERSTRICH
 --------------------------------------------------- */
 
