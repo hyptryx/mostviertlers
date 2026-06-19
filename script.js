@@ -315,7 +315,7 @@ function saveHighscore(name, score) {
   });
 }
 
-// Highscores aus Firebase laden
+// Highscores aus Firebase laden (LIVE)
 function renderHighscores() {
   const list = document.getElementById("catch-highscore-list");
   list.innerHTML = "";
@@ -323,8 +323,7 @@ function renderHighscores() {
   db.ref("mostiCatchHighscores")
     .orderByChild("score")
     .limitToLast(5)
-    .once("value")
-    .then(snapshot => {
+    .on("value", snapshot => {
       const entries = [];
 
       snapshot.forEach(child => {
@@ -333,6 +332,8 @@ function renderHighscores() {
 
       // höchste zuerst
       entries.sort((a, b) => b.score - a.score);
+
+      list.innerHTML = "";
 
       entries.forEach((entry, i) => {
         const li = document.createElement("li");
