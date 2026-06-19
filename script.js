@@ -153,7 +153,7 @@ function startGame() {
   startBtn.disabled = true;
 
   // Player Position
-  player.style.left = "50%";
+  player.style.left = (game.clientWidth / 2 - 20) + "px";
 
   // Item Reset
   resetItem();
