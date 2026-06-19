@@ -1,4 +1,20 @@
 /* ---------------------------------------------------
+   FIREBASE INIT – GLOBAL HIGHSCORES
+--------------------------------------------------- */
+const firebaseConfig = {
+  apiKey: "AIzaSyAhdTxRsm0qNUTw-iN8AHJI5ZYSA2m9oII",
+  authDomain: "mosti-catch.firebaseapp.com",
+  databaseURL: "https://mosti-catch-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "mosti-catch",
+  storageBucket: "mosti-catch.appspot.com",
+  messagingSenderId: "100463668785",
+  appId: "1:100463668785:web:3e4bb19ea88a99905d6f10"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+/* ---------------------------------------------------
    INIT
 --------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
@@ -258,36 +274,44 @@ document.getElementById("catch-save-name").onclick = () => {
 }
 
 /* ---------------------------------------------------
-   HIGHSCORE SYSTEM (MIT NAMEN)
+   GLOBAL HIGHSCORES (FIREBASE)
 --------------------------------------------------- */
 
-// Score speichern
+// Score in Firebase speichern
 function saveHighscore(name, score) {
-  let scores = JSON.parse(localStorage.getItem("mostiCatchScores")) || [];
-
-  scores.push({ name, score });
-
-  // Sortieren (höchster Score zuerst)
-  scores.sort((a, b) => b.score - a.score);
-
-  // Nur Top 5 behalten
-  scores = scores.slice(0, 5);
-
-  localStorage.setItem("mostiCatchScores", JSON.stringify(scores));
+  const ref = db.ref("mostiCatchHighscores").push();
+  ref.set({
+    name,
+    score,
+    timestamp: Date.now()
+  });
 }
 
-// Highscores anzeigen
+// Highscores aus Firebase laden
 function renderHighscores() {
   const list = document.getElementById("catch-highscore-list");
-  let scores = JSON.parse(localStorage.getItem("mostiCatchScores")) || [];
-
   list.innerHTML = "";
 
-  scores.forEach((entry, i) => {
-    const li = document.createElement("li");
-    li.textContent = `${i + 1}. ${entry.name} – ${entry.score} Punkte`;
-    list.appendChild(li);
-  });
+  db.ref("mostiCatchHighscores")
+    .orderByChild("score")
+    .limitToLast(5)
+    .once("value")
+    .then(snapshot => {
+      const entries = [];
+
+      snapshot.forEach(child => {
+        entries.push(child.val());
+      });
+
+      // höchste zuerst
+      entries.sort((a, b) => b.score - a.score);
+
+      entries.forEach((entry, i) => {
+        const li = document.createElement("li");
+        li.textContent = `${i + 1}. ${entry.name} – ${entry.score} Punkte`;
+        list.appendChild(li);
+      });
+    });
 }
 
 /* ---------------------------------------------------
