@@ -239,6 +239,55 @@ function endGame() {
   disableTouchControl();
 
   endEl.textContent = `💀 Game Over – Score: ${score}`;
+
+// Name-Eingabe anzeigen
+document.getElementById("catch-name-input").style.display = "block";
+
+// Speichern-Button aktivieren
+document.getElementById("catch-save-name").onclick = () => {
+  const name = document.getElementById("catch-player-name").value.trim() || "Unbekannt";
+
+  saveHighscore(name, score);
+  renderHighscores();
+
+  // Eingabefeld wieder verstecken
+  document.getElementById("catch-name-input").style.display = "none";
+  document.getElementById("catch-player-name").value = "";
+};
+
+}
+
+/* ---------------------------------------------------
+   HIGHSCORE SYSTEM (MIT NAMEN)
+--------------------------------------------------- */
+
+// Score speichern
+function saveHighscore(name, score) {
+  let scores = JSON.parse(localStorage.getItem("mostiCatchScores")) || [];
+
+  scores.push({ name, score });
+
+  // Sortieren (höchster Score zuerst)
+  scores.sort((a, b) => b.score - a.score);
+
+  // Nur Top 5 behalten
+  scores = scores.slice(0, 5);
+
+  localStorage.setItem("mostiCatchScores", JSON.stringify(scores));
+}
+
+// Highscores anzeigen
+function renderHighscores() {
+  const list = document.getElementById("catch-highscore-list");
+  let scores = JSON.parse(localStorage.getItem("mostiCatchScores")) || [];
+
+  list.innerHTML = "";
+
+  scores.forEach((entry, i) => {
+    const li = document.createElement("li");
+    li.textContent = `${i + 1}. ${entry.name} – ${entry.score} Punkte`;
+    list.appendChild(li);
+  });
 }
 
 /* ---------------------------------------------------
@@ -256,3 +305,5 @@ game.addEventListener("mousemove", (e) => {
 --------------------------------------------------- */
 
 startBtn.addEventListener("click", startGame);
+
+renderHighscores();
