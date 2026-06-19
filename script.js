@@ -75,3 +75,53 @@ async function checkLiveStatus() {
     }
   }
 }
+
+/* ---------------------------------------------------
+   MOSTVIERTLER SLOT MACHINE – ANIMATED
+--------------------------------------------------- */
+
+const symbols = ["🍺", "🚜", "🎧", "🔥", "😎", "💥"];
+
+const slot1 = document.getElementById("slot1");
+const slot2 = document.getElementById("slot2");
+const slot3 = document.getElementById("slot3");
+const result = document.getElementById("slot-result");
+const btn = document.getElementById("slot-btn");
+
+btn.addEventListener("click", () => {
+
+  // Animation starten
+  [slot1, slot2, slot3].forEach(slot => {
+    slot.classList.remove("spin-active");
+    void slot.offsetWidth; // Trick zum Neustarten der Animation
+    slot.classList.add("spin-active");
+  });
+
+  // Zufällige Symbole
+  const s1 = symbols[Math.floor(Math.random() * symbols.length)];
+  const s2 = symbols[Math.floor(Math.random() * symbols.length)];
+  const s3 = symbols[Math.floor(Math.random() * symbols.length)];
+
+  // Verzögerter "Spin"
+  setTimeout(() => slot1.textContent = s1, 150);
+  setTimeout(() => slot2.textContent = s2, 300);
+  setTimeout(() => slot3.textContent = s3, 450);
+
+  // Ergebnis nach dem Spin
+  setTimeout(() => {
+    if (s1 === s2 && s2 === s3) {
+      result.textContent = "🎉 JACKPOT! Du hast den goldenen Most gewonnen!";
+      
+      // Jackpot Flash
+      [slot1, slot2, slot3].forEach(slot => {
+        slot.classList.add("jackpot");
+        setTimeout(() => slot.classList.remove("jackpot"), 3000);
+      });
+
+    } else if (s1 === s2 || s2 === s3 || s1 === s3) {
+      result.textContent = "✨ Fast! Zwei Treffer – probier’s nochmal!";
+    } else {
+      result.textContent = "😅 Nix geworden… typisch Mostviertler Glück!";
+    }
+  }, 500);
+});
