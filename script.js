@@ -226,3 +226,5 @@ game.addEventListener("touchmove", (e) => {
   player.style.left = x + "px";
 }, { passive: false });
 
+// ⭐ SPIEL STARTEN – FEHLTE BISHER
+startBtn.addEventListener("click", startGame);
