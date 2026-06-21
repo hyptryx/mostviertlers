@@ -954,3 +954,153 @@ body {
   }
 }
 
+/* ---------------------------------------------------
+   MOSTI RUN – JUMP & RUN GAME
+--------------------------------------------------- */
+
+.mosti-run {
+  max-width: 700px;
+  margin: 60px auto;
+  text-align: center;
+}
+
+/* Spielfeld */
+.run-game {
+  width: 100%;
+  height: 300px;
+  background: rgba(20,20,20,0.65);
+  border: 2px solid rgba(255,215,0,0.35);
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(255,215,0,0.25);
+}
+
+/* Hintergrund (scrollend) */
+.run-background {
+  position: absolute;
+  inset: 0;
+  background: url("img/mosti-bg.png") repeat-x;
+  background-size: cover;
+  animation: runBgScroll 6s linear infinite;
+  z-index: 1;
+  opacity: 0.25;
+}
+
+@keyframes runBgScroll {
+  from { background-position: 0 0; }
+  to { background-position: -800px 0; }
+}
+
+/* Spieler (Bierkrügerl) */
+.run-player {
+  position: absolute;
+  left: 40px;
+  bottom: 20px;
+  font-size: 3rem;
+  z-index: 5;
+  transition: bottom 0.1s ease-out;
+}
+
+/* Hindernisse (Bierkisten) */
+.run-obstacle-container div {
+  position: absolute;
+  right: -80px;
+  font-size: 3rem;
+  z-index: 5;
+  animation: obstacleMove linear forwards;
+}
+
+@keyframes obstacleMove {
+  from { right: -80px; }
+  to { right: 120%; }
+}
+
+/* Startbutton */
+.run-start {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(90deg, #ff9900, #ffd700);
+  color: #000;
+  font-family: "Orbitron", sans-serif;
+  box-shadow: 0 0 20px rgba(255,215,0,0.35);
+  margin-top: 10px;
+}
+
+/* Score */
+.run-info {
+  font-size: 1.2rem;
+  color: #ffd86b;
+  margin-top: 10px;
+}
+
+/* Game Over */
+.run-end {
+  font-size: 1.4rem;
+  color: #ffd86b;
+  margin-top: 10px;
+  min-height: 30px;
+}
+
+/* Name Eingabe */
+.run-name-input {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.run-name-input input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 2px solid #ffcc00;
+  background: #fff7d1;
+  font-size: 16px;
+}
+
+.run-name-input button {
+  padding: 6px 12px;
+  margin-left: 6px;
+  border-radius: 6px;
+  border: none;
+  background: #ffcc00;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Highscore Liste */
+.run-highscores {
+  margin-top: 20px;
+  text-align: center;
+  color: #ffcc00;
+  font-weight: bold;
+}
+
+.run-highscores ol {
+  list-style: none;
+  padding: 0;
+  margin: 10px auto;
+  max-width: 250px;
+}
+
+.run-highscores li {
+  background: rgba(255, 200, 0, 0.15);
+  border: 1px solid #ffcc00;
+  padding: 6px;
+  margin: 4px 0;
+  border-radius: 6px;
+  font-size: 18px;
+}
+
+/* Jump Animation */
+@keyframes jump {
+  0%   { bottom: 20px; }
+  40%  { bottom: 120px; }
+  60%  { bottom: 120px; }
+  100% { bottom: 20px; }
+}
+
+.run-player.jump {
+  animation: jump 0.55s ease-out;
+}
