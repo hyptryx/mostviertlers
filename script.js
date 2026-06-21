@@ -274,6 +274,211 @@ document.getElementById("catch-save-name").onclick = () => {
 }
 
 /* ---------------------------------------------------
+   MOSTI RUN – JUMP & RUN GAME
+--------------------------------------------------- */
+
+const runGame = document.getElementById("run-game");
+const runPlayer = document.getElementById("run-player");
+const runStartBtn = document.getElementById("run-start");
+const runScoreEl = document.getElementById("run-score");
+const runEndEl = document.getElementById("run-end");
+const runNameInput = document.getElementById("run-name-input");
+const runObstacles = document.getElementById("run-obstacles");
+
+let runScore = 0;
+let runSpeed = 6;
+let runSpeedIncrease = 0.12;
+let runInterval;
+let runSpeedInterval;
+let runIsJumping = false;
+let runGameActive = false;
+
+/* ---------------------------------------------------
+   JUMP
+--------------------------------------------------- */
+function runJump() {
+  if (runIsJumping || !runGameActive) return;
+
+  runIsJumping = true;
+  runPlayer.classList.add("jump");
+
+  setTimeout(() => {
+    runPlayer.classList.remove("jump");
+    runIsJumping = false;
+  }, 550);
+}
+
+runGame.addEventListener("click", runJump);
+
+/* ---------------------------------------------------
+   OBSTACLE SPAWN
+--------------------------------------------------- */
+function spawnObstacle() {
+  const box = document.createElement("div");
+  box.textContent = "📦";
+
+  // Zufällige Höhe (3 Stufen)
+  const heights = [20, 60, 100];
+  const h = heights[Math.floor(Math.random() * heights.length)];
+
+  box.style.bottom = h + "px";
+  box.style.animationDuration = (3.5 - runSpeed * 0.05) + "s";
+
+  runObstacles.appendChild(box);
+
+  // Entfernen nach Animation
+  setTimeout(() => box.remove(), 4000);
+}
+
+/* ---------------------------------------------------
+   COLLISION CHECK
+--------------------------------------------------- */
+function checkCollision() {
+  const playerRect = runPlayer.getBoundingClientRect();
+
+  document.querySelectorAll("#run-obstacles div").forEach(ob => {
+    const obRect = ob.getBoundingClientRect();
+
+    if (
+      obRect.left < playerRect.right &&
+      obRect.right > playerRect.left &&
+      obRect.bottom > playerRect.top &&
+      obRect.top < playerRect.bottom
+    ) {
+      runGameOver();
+    }
+  });
+}
+
+/* ---------------------------------------------------
+   GAME START
+--------------------------------------------------- */
+function runStartGame() {
+  runScore = 0;
+  runSpeed = 6;
+  runGameActive = true;
+
+  runScoreEl.textContent = "0";
+  runEndEl.textContent = "";
+  runNameInput.style.display = "none";
+
+  runStartBtn.disabled = true;
+
+  // Speed Increase
+  runSpeedInterval = setInterval(() => {
+    runSpeed += runSpeedIncrease;
+  }, 1000);
+
+  // Score Timer
+  runInterval = setInterval(() => {
+    runScore++;
+    runScoreEl.textContent = runScore;
+
+    // Hindernisse spawnen
+    if (runScore % 40 === 0) spawnObstacle();
+
+    // Kollision prüfen
+    checkCollision();
+
+  }, 100);
+}
+
+/* ---------------------------------------------------
+   GAME OVER
+--------------------------------------------------- */
+function runGameOver() {
+  if (!runGameActive) return;
+
+  runGameActive = false;
+
+  clearInterval(runInterval);
+  clearInterval(runSpeedInterval);
+
+  runEndEl.textContent = `💀 Game Over – Überlebt: ${runScore} Sekunden`;
+
+  runNameInput.style.display = "block";
+
+  document.getElementById("run-save-name").onclick = () => {
+    const name = document.getElementById("run-player-name").value.trim() || "Unbekannt";
+
+    saveRunHighscore(name, runScore);
+    renderRunHighscores();
+
+    runNameInput.style.display = "none";
+    document.getElementById("run-player-name").value = "";
+  };
+
+  runStartBtn.disabled = false;
+}
+
+/* ---------------------------------------------------
+   FIREBASE – MOSTI RUN HIGHSCORES
+--------------------------------------------------- */
+
+function saveRunHighscore(name, score) {
+  const ref = db.ref("mostiRunHighscores");
+
+  const cleanName = name.trim();
+  const keyName = cleanName.toLowerCase();
+
+  ref.orderByChild("keyName").equalTo(keyName).once("value", snapshot => {
+
+    if (snapshot.exists()) {
+      const key = Object.keys(snapshot.val())[0];
+      const oldData = snapshot.val()[key];
+
+      if (score > oldData.score) {
+        ref.child(key).update({
+          name: cleanName,
+          keyName: keyName,
+          score,
+          timestamp: Date.now()
+        });
+      }
+
+    } else {
+      ref.push({
+        name: cleanName,
+        keyName: keyName,
+        score,
+        timestamp: Date.now()
+      });
+    }
+  });
+}
+
+function renderRunHighscores() {
+  const list = document.getElementById("run-highscore-list");
+  list.innerHTML = "";
+
+  db.ref("mostiRunHighscores")
+    .orderByChild("score")
+    .limitToLast(5)
+    .on("value", snapshot => {
+      const entries = [];
+
+      snapshot.forEach(child => entries.push(child.val()));
+
+      entries.sort((a, b) => b.score - a.score);
+
+      list.innerHTML = "";
+
+      entries.forEach((entry, i) => {
+        const li = document.createElement("li");
+        li.textContent = `${i + 1}. ${entry.name} – ${entry.score} Sekunden`;
+        list.appendChild(li);
+      });
+    });
+}
+
+/* ---------------------------------------------------
+   START BUTTON
+--------------------------------------------------- */
+runStartBtn.addEventListener("click", runStartGame);
+
+renderRunHighscores();
+
+/* ---------------------------------------------------
    GLOBAL HIGHSCORES (FIREBASE)
 --------------------------------------------------- */
 
