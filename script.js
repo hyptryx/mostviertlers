@@ -274,7 +274,7 @@ document.getElementById("catch-save-name").onclick = () => {
 }
 
 /* ---------------------------------------------------
-   MOSTI RUN – JUMP & RUN GAME
+   MOSTI RUN – UPGRADED ARCADE VERSION
 --------------------------------------------------- */
 
 const runGame = document.getElementById("run-game");
@@ -287,17 +287,25 @@ const runObstacles = document.getElementById("run-obstacles");
 
 let runScore = 0;
 let runSpeed = 6;
-let runSpeedIncrease = 0.12;
+let runGameActive = false;
+let runIsJumping = false;
 let runInterval;
 let runSpeedInterval;
-let runIsJumping = false;
-let runGameActive = false;
 
 /* ---------------------------------------------------
-   JUMP
+   SOUNDS
+--------------------------------------------------- */
+const sndJump = new Audio("sounds/jump.mp3");
+const sndCrash = new Audio("sounds/crash.mp3");
+
+/* ---------------------------------------------------
+   JUMP (Mario‑Style)
 --------------------------------------------------- */
 function runJump() {
-  if (runIsJumping || !runGameActive) return;
+  if (!runGameActive || runIsJumping) return;
+
+  sndJump.currentTime = 0;
+  sndJump.play();
 
   runIsJumping = true;
   runPlayer.classList.add("jump");
@@ -308,25 +316,33 @@ function runJump() {
   }, 550);
 }
 
-runGame.addEventListener("click", runJump);
+/* Sofort‑Jump */
+runGame.addEventListener("mousedown", runJump);
+runGame.addEventListener("touchstart", runJump);
+document.addEventListener("keydown", e => {
+  if (e.code === "Space") runJump();
+});
 
 /* ---------------------------------------------------
-   OBSTACLE SPAWN
+   OBSTACLE SPAWN (PNG + Random Size)
 --------------------------------------------------- */
 function spawnObstacle() {
-  const box = document.createElement("div");
-  box.textContent = "📦";
+  const box = document.createElement("img");
+  box.src = "img/bierkiste.png";
+  box.classList.add("run-obstacle");
 
-  // Zufällige Höhe (3 Stufen)
+  const sizes = [40, 60, 80];
+  const size = sizes[Math.floor(Math.random() * sizes.length)];
+  box.style.width = size + "px";
+
   const heights = [20, 60, 100];
   const h = heights[Math.floor(Math.random() * heights.length)];
-
   box.style.bottom = h + "px";
+
   box.style.animationDuration = (3.5 - runSpeed * 0.05) + "s";
 
   runObstacles.appendChild(box);
 
-  // Entfernen nach Animation
   setTimeout(() => box.remove(), 4000);
 }
 
@@ -336,7 +352,7 @@ function spawnObstacle() {
 function checkCollision() {
   const playerRect = runPlayer.getBoundingClientRect();
 
-  document.querySelectorAll("#run-obstacles div").forEach(ob => {
+  document.querySelectorAll(".run-obstacle").forEach(ob => {
     const obRect = ob.getBoundingClientRect();
 
     if (
@@ -349,6 +365,18 @@ function checkCollision() {
     }
   });
 }
+
+/* ---------------------------------------------------
+   ANTI‑CHEAT (Teleport‑Blocker)
+--------------------------------------------------- */
+setInterval(() => {
+  if (!runGameActive) return;
+
+  const bottom = parseInt(window.getComputedStyle(runPlayer).bottom);
+  if (bottom > 200) {
+    runGameOver();
+  }
+}, 200);
 
 /* ---------------------------------------------------
    GAME START
@@ -364,22 +392,19 @@ function runStartGame() {
 
   runStartBtn.disabled = true;
 
-  // Speed Increase
+  /* Speed‑Kurve wie Chrome Dino */
   runSpeedInterval = setInterval(() => {
-    runSpeed += runSpeedIncrease;
+    runSpeed += 0.05 + runScore * 0.0008;
   }, 1000);
 
-  // Score Timer
+  /* Score + Obstacles */
   runInterval = setInterval(() => {
     runScore++;
     runScoreEl.textContent = runScore;
 
-    // Hindernisse spawnen
     if (runScore % 40 === 0) spawnObstacle();
 
-    // Kollision prüfen
     checkCollision();
-
   }, 100);
 }
 
@@ -394,6 +419,9 @@ function runGameOver() {
   clearInterval(runInterval);
   clearInterval(runSpeedInterval);
 
+  sndCrash.currentTime = 0;
+  sndCrash.play();
+
   runEndEl.textContent = `💀 Game Over – Überlebt: ${runScore} Sekunden`;
 
   runNameInput.style.display = "block";
@@ -403,6 +431,10 @@ function runGameOver() {
 
     saveRunHighscore(name, runScore);
     renderRunHighscores();
+
+    /* Neuer Rekord Flash */
+    runEndEl.classList.add("new-record");
+    setTimeout(() => runEndEl.classList.remove("new-record"), 3000);
 
     runNameInput.style.display = "none";
     document.getElementById("run-player-name").value = "";
@@ -414,7 +446,6 @@ function runGameOver() {
 /* ---------------------------------------------------
    FIREBASE – MOSTI RUN HIGHSCORES
 --------------------------------------------------- */
-
 function saveRunHighscore(name, score) {
   const ref = db.ref("mostiRunHighscores");
 
