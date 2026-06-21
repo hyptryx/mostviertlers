@@ -985,23 +985,22 @@ body {
   inset: 0;
   z-index: 0;
 
-  /* Verlauf um 180° gedreht → hell rechts */
-  background: linear-gradient(
-    270deg,
-    rgba(255,255,255,0.00) 0%,
-    rgba(255,255,255,0.10) 40%,
-    rgba(255,255,255,0.20) 50%,
-    rgba(255,255,255,0.10) 60%,
-    rgba(255,255,255,0.00) 100%
+  /* horizontale Striche */
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.05) 0px,
+    rgba(255,255,255,0.05) 2px,
+    transparent 2px,
+    transparent 30px
   );
 
-  background-size: 200% 100%;
-  animation: moveLeft 6s linear infinite;
+  background-size: 100% 100%;
+  animation: moveLeft 2.5s linear infinite;
 }
 
 @keyframes moveLeft {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0%   { background-position: 0 0; }
+  100% { background-position: -40px 0; }
 }
 
 /* ---------------------------------------------------
