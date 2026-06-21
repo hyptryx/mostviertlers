@@ -1038,7 +1038,7 @@ body {
    OBSTACLES (PNG BIERKISTEN)
 --------------------------------------------------- */
 
-.run-obstacle-container img {
+.run-obstacle {
   position: absolute;
   right: -100px;
   height: auto;
