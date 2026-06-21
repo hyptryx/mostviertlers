@@ -985,24 +985,24 @@ body {
   inset: 0;
   z-index: 0;
 
-  /* Verlauf umgedreht – hell rechts, dunkel links */
+  /* sichtbarer, weicher Lichtstreifen */
   background: linear-gradient(
     90deg,
-    rgba(255,255,255,0.00) 100%,
-    rgba(255,255,255,0.03) 70%,
-    rgba(255,255,255,0.06) 50%,
-    rgba(255,255,255,0.03) 30%,
-    rgba(255,255,255,0.00) 0%
+    rgba(255,255,255,0.00) 0%,
+    rgba(255,255,255,0.10) 40%,
+    rgba(255,255,255,0.20) 50%,
+    rgba(255,255,255,0.10) 60%,
+    rgba(255,255,255,0.00) 100%
   );
 
-  /* Bewegung */
-  background-size: 300% 100%;
-  animation: softScroll 10s linear infinite;
+  /* Bewegung von RECHTS → LINKS */
+  background-size: 200% 100%;
+  animation: moveLeft 4s linear infinite;
 }
 
-@keyframes softScroll {
-  0%   { background-position: 0% 0; }
-  100% { background-position: -300% 0; }
+@keyframes moveLeft {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 /* ---------------------------------------------------
