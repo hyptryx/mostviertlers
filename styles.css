@@ -977,7 +977,7 @@ body {
 }
 
 /* ---------------------------------------------------
-   SPEED-LINES BACKGROUND (NO PNG)
+   HORIZONTAL WAVES BACKGROUND (NO PNG)
 --------------------------------------------------- */
 
 .run-background-layer {
@@ -985,21 +985,23 @@ body {
   inset: 0;
   z-index: 0;
 
-  /* Speed-Lines */
+  /* horizontale Linien */
   background: repeating-linear-gradient(
-    to right,
-    rgba(255,255,255,0.06) 0px,
-    rgba(255,255,255,0.06) 2px,
+    to bottom,
+    rgba(255,255,255,0.07) 0px,
+    rgba(255,255,255,0.07) 2px,
     transparent 2px,
-    transparent 22px
+    transparent 28px
   );
 
-  animation: bgScroll 1.2s linear infinite;
+  /* Wellenbewegung */
+  animation: waveScroll 2.2s ease-in-out infinite;
 }
 
-@keyframes bgScroll {
-  from { background-position: 0 0; }
-  to { background-position: -200px 0; }
+@keyframes waveScroll {
+  0%   { background-position: 0 0; }
+  50%  { background-position: 0 12px; }
+  100% { background-position: 0 0; }
 }
 
 /* ---------------------------------------------------
