@@ -977,7 +977,7 @@ body {
 }
 
 /* ---------------------------------------------------
-   SOFT HORIZONTAL MOVING BACKGROUND (NO PNG)
+   ULTRA-SMOOTH HORIZONTAL MOVING GRADIENT
 --------------------------------------------------- */
 
 .run-background-layer {
@@ -985,22 +985,24 @@ body {
   inset: 0;
   z-index: 0;
 
-  /* sanfter horizontaler Verlauf */
+  /* extrem weicher Verlauf */
   background: linear-gradient(
     90deg,
-    rgba(255,255,255,0.03) 0%,
-    rgba(255,255,255,0.07) 50%,
-    rgba(255,255,255,0.03) 100%
+    rgba(255,255,255,0.00) 0%,
+    rgba(255,255,255,0.03) 20%,
+    rgba(255,255,255,0.06) 50%,
+    rgba(255,255,255,0.03) 80%,
+    rgba(255,255,255,0.00) 100%
   );
 
   /* Bewegung von rechts nach links */
   background-size: 200% 100%;
-  animation: softScroll 10s linear infinite;
+  animation: softScroll 8s linear infinite;
 }
 
 @keyframes softScroll {
-  0%   { background-position: 100% 0; }
-  100% { background-position: 0% 0; }
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 /* ---------------------------------------------------
