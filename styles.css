@@ -977,36 +977,29 @@ body {
 }
 
 /* ---------------------------------------------------
-   PARALLAX BACKGROUND (2 LAYER)
+   SPEED-LINES BACKGROUND (NO PNG)
 --------------------------------------------------- */
 
 .run-background-layer {
   position: absolute;
   inset: 0;
-  background-repeat: repeat-x;
-  background-size: cover;
-  opacity: 0.45;
   z-index: 0;
+
+  /* Speed-Lines */
+  background: repeating-linear-gradient(
+    to right,
+    rgba(255,255,255,0.06) 0px,
+    rgba(255,255,255,0.06) 2px,
+    transparent 2px,
+    transparent 22px
+  );
+
+  animation: bgScroll 1.2s linear infinite;
 }
 
-.layer-far {
-  background-image: url("img/run-bg-far.png");
-  animation: bgScrollFar 12s linear infinite;
-}
-
-.layer-near {
-  background-image: url("img/run-bg-near.png");
-  animation: bgScrollNear 4s linear infinite;
-}
-
-@keyframes bgScrollFar {
+@keyframes bgScroll {
   from { background-position: 0 0; }
-  to { background-position: -1600px 0; }
-}
-
-@keyframes bgScrollNear {
-  from { background-position: 0 0; }
-  to { background-position: -2400px 0; }
+  to { background-position: -200px 0; }
 }
 
 /* ---------------------------------------------------
