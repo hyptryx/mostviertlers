@@ -977,7 +977,7 @@ body {
 }
 
 /* ---------------------------------------------------
-   2D SNAKE-WAVE BACKGROUND (NO PNG)
+   SOFT HORIZONTAL MOVING BACKGROUND (NO PNG)
 --------------------------------------------------- */
 
 .run-background-layer {
@@ -985,25 +985,22 @@ body {
   inset: 0;
   z-index: 0;
 
-  /* horizontale Linien */
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.07) 0px,
-    rgba(255,255,255,0.07) 2px,
-    transparent 2px,
-    transparent 40px
+  /* sanfter horizontaler Verlauf */
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.03) 0%,
+    rgba(255,255,255,0.07) 50%,
+    rgba(255,255,255,0.03) 100%
   );
 
-  /* 2D Wellenbewegung */
-  animation: snakeWave 3.5s ease-in-out infinite;
+  /* Bewegung von rechts nach links */
+  background-size: 200% 100%;
+  animation: softScroll 10s linear infinite;
 }
 
-@keyframes snakeWave {
-  0%   { background-position: 0px 0px; }
-  25%  { background-position: -25px 10px; }
-  50%  { background-position: -50px 0px; }
-  75%  { background-position: -25px -10px; }
-  100% { background-position: 0px 0px; }
+@keyframes softScroll {
+  0%   { background-position: 100% 0; }
+  100% { background-position: 0% 0; }
 }
 
 /* ---------------------------------------------------
