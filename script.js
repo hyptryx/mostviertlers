@@ -391,7 +391,9 @@ function startDropGame() {
   dropStartBtn.disabled = true;
 
   // Spieler zentrieren
+  setTimeout(() => {
   dropPlayer.style.left = (dropGame.clientWidth / 2 - dropPlayer.offsetWidth / 2) + "px";
+}, 10);
 
   // Erstes Item erzeugen
   spawnDropItem();
@@ -416,7 +418,8 @@ function spawnDropItem() {
   dropItem.classList.add("drop-item");
   dropItem.textContent = emojiList[Math.floor(Math.random() * emojiList.length)];
 
-  dropItem.style.left = Math.random() * (dropGame.clientWidth - 40) + "px";
+  const itemWidth = dropItem.offsetWidth || 40;
+   dropItem.style.left = Math.random() * (dropGame.clientWidth - itemWidth) + "px";
   dropItem.style.top = "-40px";
 
   dropGame.appendChild(dropItem);
@@ -435,15 +438,27 @@ function startDropFall(dropItem) {
 
     dropItem.style.top = top + dropSpeed + "px";
 
+    // KORREKTE RELATIVE KOLLISION
+    const gameRect = dropGame.getBoundingClientRect();
     const itemRect = dropItem.getBoundingClientRect();
     const playerRect = dropPlayer.getBoundingClientRect();
 
+    const itemLeft = itemRect.left - gameRect.left;
+    const itemRight = itemRect.right - gameRect.left;
+    const itemTop = itemRect.top - gameRect.top;
+    const itemBottom = itemRect.bottom - gameRect.top;
+
+    const playerLeft = playerRect.left - gameRect.left;
+    const playerRight = playerRect.right - gameRect.left;
+    const playerTop = playerRect.top - gameRect.top;
+    const playerBottom = playerRect.bottom - gameRect.top;
+
     // Kollision
     if (
-      itemRect.bottom >= playerRect.top &&
-      itemRect.top <= playerRect.bottom &&
-      itemRect.right >= playerRect.left &&
-      itemRect.left <= playerRect.right
+      itemBottom >= playerTop &&
+      itemTop <= playerBottom &&
+      itemRight >= playerLeft &&
+      itemLeft <= playerRight
     ) {
       dropScore++;
       dropScoreEl.textContent = dropScore;
@@ -455,7 +470,7 @@ function startDropFall(dropItem) {
     }
 
     // Verpasst → Game Over
-    if (top > 300) {
+    if (itemTop > dropGame.clientHeight)
       clearInterval(fall);
       dropItem.remove();
       endDropGame();
@@ -469,7 +484,6 @@ function startDropFall(dropItem) {
 --------------------------------------------------- */
 
 function endDropGame() {
-  clearInterval(dropFallInterval);
   clearInterval(dropSpeedInterval);
 
   dropStartBtn.disabled = false;
@@ -521,7 +535,6 @@ dropGame.addEventListener("mousemove", (e) => {
 
   let x = e.clientX - rect.left - playerWidth / 2;
 
-  // Begrenzen
   if (x < 0) x = 0;
   if (x > dropGame.clientWidth - playerWidth) {
     x = dropGame.clientWidth - playerWidth;
