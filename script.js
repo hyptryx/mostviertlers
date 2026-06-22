@@ -389,7 +389,7 @@ function startDropGame() {
 
   dropStartBtn.disabled = true;
 
-  // Spieler zentrieren (Emoji braucht 1 Render-Tick)
+  // Spieler zentrieren
   setTimeout(() => {
     dropPlayer.style.left =
       dropGame.clientWidth / 2 - dropPlayer.offsetWidth / 2 + "px";
@@ -610,3 +610,4 @@ function renderDropHighscores() {
 }
 
 renderDropHighscores();
+
