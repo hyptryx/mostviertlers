@@ -382,6 +382,8 @@ let dropTimeInterval;
 let activeItems = 0;
 const maxItems = 3;
 
+let activeFalls = [];
+
 /* ---------------------------------------------------
    MOSTI DROP – START
 --------------------------------------------------- */
@@ -478,7 +480,9 @@ function startDropFall(dropItem) {
 
     const gameRect = dropGame.getBoundingClientRect();
     const itemRect = dropItem.getBoundingClientRect();
-    const playerRect = dropPlayer.getBoundingClientRect();
+    const playerRect = document
+      .querySelector(".drop-player-hitbox")
+      .getBoundingClientRect();
 
     const itemLeft = itemRect.left - gameRect.left;
     const itemRight = itemRect.right - gameRect.left;
@@ -498,6 +502,7 @@ function startDropFall(dropItem) {
       itemLeft <= playerRight
     ) {
       clearInterval(fall);
+      activeFalls = activeFalls.filter(f => f !== fall);
       dropItem.remove();
       activeItems--;
       endDropGame();
@@ -507,12 +512,16 @@ function startDropFall(dropItem) {
     // Verpasst → neues Item
     if (itemTop > dropGame.clientHeight) {
       clearInterval(fall);
+      activeFalls = activeFalls.filter(f => f !== fall);
       dropItem.remove();
       activeItems--;
       spawnDropItem();
       return;
     }
   }, 30);
+
+  // WICHTIG: Fall-Interval speichern
+  activeFalls.push(fall);
 }
 
 /* ---------------------------------------------------
@@ -524,6 +533,9 @@ function endDropGame() {
   activeFalls.forEach(f => clearInterval(f));
   activeFalls = [];
 
+   document.querySelectorAll(".drop-item").forEach(item => item.remove());
+   activeItems = 0;
+   
   clearInterval(dropSpeedInterval);
   clearInterval(dropTimeInterval);
 
