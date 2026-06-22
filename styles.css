@@ -980,20 +980,20 @@ body {
 .drop-player {
   position: absolute;
   bottom: 0;
+  width: 50px;
+  height: 50px;
   font-size: 2.5rem;
-  height: 40px;
-  width: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: none;
 }
 
 .drop-item {
   position: absolute;
-  top: -40px;
+  width: 50px;
+  height: 50px;
   font-size: 2.5rem;
-  height: 40px;
-  width: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
