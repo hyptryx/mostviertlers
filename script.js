@@ -616,4 +616,3 @@ function renderDropHighscores() {
 }
 
 renderDropHighscores();
-
