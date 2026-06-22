@@ -989,6 +989,16 @@ body {
   transition: none;
 }
 
+.drop-player-hitbox {
+  position: absolute;
+  width: 28px;      /* schmale Hitbox */
+  height: 40px;     /* etwas kleiner als Emoji */
+  top: 5px;         /* zentriert */
+  left: 11px;       /* zentriert */
+  background: rgba(255,0,0,0); /* unsichtbar */
+  pointer-events: none;
+}
+
 .drop-item {
   position: absolute;
   width: 50px;
