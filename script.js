@@ -666,3 +666,21 @@ function renderDropHighscores() {
 
 renderDropHighscores();
 
+/* ---------------------------------------------------
+   EVENT POPUP – AUTO OPEN
+--------------------------------------------------- */
+
+window.addEventListener("load", () => {
+  // Nur anzeigen, wenn noch nicht gesehen
+  if (!sessionStorage.getItem("eventPopupSeen")) {
+    document.getElementById("event-popup-overlay").style.display = "block";
+    document.getElementById("event-popup").classList.add("show");
+    sessionStorage.setItem("eventPopupSeen", "true");
+  }
+});
+
+// Schließen
+document.getElementById("event-popup-close").addEventListener("click", () => {
+  document.getElementById("event-popup-overlay").style.display = "none";
+  document.getElementById("event-popup").classList.remove("show");
+});
