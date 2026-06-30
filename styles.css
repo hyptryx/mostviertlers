@@ -1143,6 +1143,11 @@ body {
   margin-top: 10px;
 }
 
+#event-popup {
+  background: rgba(20,20,20,0.95);
+  color: #ffcc00;
+}
+
 #event-popup h3 {
   color: #ffcc00;
   margin-bottom: 10px;
